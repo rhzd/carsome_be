@@ -1,9 +1,9 @@
-var mongoose     = require('mongoose');
-var Schema       = mongoose.Schema;
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
 
-var ProductSchema   = new Schema({
-    name: String,
-    reviews: Array
+var ProductSchema = new Schema({
+  name: String,
+  reviews: Array,
 });
 
-module.exports = mongoose.model('Product', ProductSchema);
+module.exports = mongoose.model("Product", ProductSchema);

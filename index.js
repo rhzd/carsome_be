@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
         product.reviews[index].message = payload.message;
         product.reviews[index].rating = payload.rating;
         console.log(product.reviews[index]);
-        product.markModified('reviews');
+        product.markModified("reviews");
       }
       product.save();
     });
