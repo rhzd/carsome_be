@@ -34,6 +34,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("POST_REVIEW", (payload) => {
+    //should be some payload validation here
     Product.findOne({ _id: payload.id }, function (err, product) {
       let index = product.reviews.findIndex((obj) => obj.user === payload.user);
       console.log(index);
