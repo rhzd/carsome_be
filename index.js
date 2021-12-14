@@ -1,30 +1,21 @@
-require('dotenv').config()
-const app = require("express")();
-var mongoose = require("mongoose");
-const http = require("http").createServer(app);
+require("dotenv").config();
+const express = require("express");
+const app = express();
+const server = require("http").createServer(app);
 const cors = require("cors");
-var Product = require("./product-model");
-const io = require("socket.io")(http, {
+var ProductModel = require("./models/product");
+const product = require("./api/product");
+
+const io = require("socket.io")(server, {
   cors: {
     origins: [process.env.CLIENT_HOST],
   },
 });
 app.use(cors());
-mongoose.connect(
-  `mongodb+srv://${process.env.MONGODB_CONFIG}?retryWrites=true&w=majority`
-); // connect to our database.
 
-app.get("/", (req, res) => {
-  res.send("200");
-});
+app.use(express.json({ extended: false }));
 
-app.get("/product", (req, res) => {
-  Product.find(function (err, product) {
-    if (err) res.send(err);
-    res.json(product);
-  });
-});
-
+app.use("/api/product", product);
 io.on("connection", (socket) => {
   console.log("a user connected");
 
@@ -34,7 +25,7 @@ io.on("connection", (socket) => {
 
   socket.on("POST_REVIEW", (payload) => {
     //should be some payload validation here
-    Product.findOne({ _id: payload.id }, function (err, product) {
+    ProductModel.findOne({ _id: payload.id }, function (err, product) {
       let index = product.reviews.findIndex((obj) => obj.user === payload.user);
       console.log(index);
       if (index < 0) {
@@ -55,9 +46,5 @@ io.on("connection", (socket) => {
     io.emit("GET_REVIEWS", payload);
   });
 });
-
-const port = process.env.PORT || 3000
-
-http.listen(port, () => {
-  console.log(`listening on *:${port}`);
-});
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => console.log(`Server is running in port ${PORT}`));

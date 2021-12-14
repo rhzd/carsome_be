@@ -1,10 +1,17 @@
 {
   "name": "carsome-be",
-  "version": "0.0.1",
-  "description": "carsome-be rating page assessment",
-  "scripts": {
-    "start": "npm start"
+  "version": "1.0.0",
+  "description": "carsome-be for vercel.",
+  "main": "index.js",
+  "engines": {
+    "node": "14.x"
   },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
