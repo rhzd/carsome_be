@@ -2,8 +2,12 @@
   "name": "carsome-be",
   "version": "0.0.1",
   "description": "carsome-be rating page assessment",
+  "scripts": {
+    "start": "npm start"
+  },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^6.1.1",
     "socket.io": "^4.4.0"

@@ -1,3 +1,4 @@
+require('dotenv').config()
 const app = require("express")();
 var mongoose = require("mongoose");
 const http = require("http").createServer(app);
@@ -5,15 +6,13 @@ const cors = require("cors");
 var Product = require("./product-model");
 const io = require("socket.io")(http, {
   cors: {
-    origins: ["http://localhost:8080"],
+    origins: [process.env.CLIENT_HOST],
   },
 });
-
 app.use(cors());
-
 mongoose.connect(
-  "mongodb+srv://carsome-db:Carsome9876@cluster0.y4jsi.mongodb.net/carsome?retryWrites=true&w=majority"
-); // connect to our database. Only for the sake of simplicity, should be in .env.
+  `mongodb+srv://${process.env.MONGODB_CONFIG}?retryWrites=true&w=majority`
+); // connect to our database.
 
 app.get("/", (req, res) => {
   res.send("200");
